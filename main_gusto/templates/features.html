@@ -1,0 +1,20 @@
+{% load static %}
+<!-- Features Section -->
+<section id="features" class="text-center">
+      <div class="container">
+        <div class="section-title">
+          <h2>Меню от шефа</h2>
+        </div>
+        <div class="row">
+              {% for dish in special %}
+              <div class="col-xs-12 col-sm-4">
+                <div class="features-item">
+                  <h3><a href="/menu/dish/{{ dish.pk }}">{{ dish.title }}</a></h3>
+                  <img src={{ dish.photo }} class="img-responsive" alt="">
+                  <p>{{ dish.desc }}</p>
+                </div>
+              </div>
+              {% endfor %}
+        </div>
+      </div>
+</section>
