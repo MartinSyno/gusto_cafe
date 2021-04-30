@@ -1,6 +1,7 @@
 from django.db import models
 from uuid import uuid4
 from os import path
+from django.urls import reverse
 
 # Create your models here.
 class Category(models.Model):
@@ -24,16 +25,31 @@ class Dish(models.Model):
         filename = f"{uuid4()}.{ext}"
         return path.join("images/dishes", filename)
 
-    title = models.CharField(max_length=25, unique=True)
-    photo = models.ImageField(upload_to=get_file_name)
+    title = models.CharField(max_length=25, unique=True, db_index=True)
+    slug = models.SlugField(db_index=True)
+    photo = models.ImageField(upload_to=get_file_name)  # upload_to='products/%Y/%m/%d'
     dish_order = models.IntegerField()
     is_visible = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
+    available = models.BooleanField(default=True)
     desc = models.CharField(max_length=150, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta():
+        ordering = ('title',)
+        index_together = (('id', 'slug'),)
+
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.hiring)
+    #     super(hire_article, self).save(*args, **kwargs) #Чтобы slug вводился автоматически и в формах.
 
     def __str__(self):
-        return f"{self.title}: {self.dish_order} : {self.price} грн. : {self.category.title}"
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("main_gusto:dish_page_view", args=[self.id, self.slug])
 
 class Info(models.Model):
     def get_file_name(self, filename):

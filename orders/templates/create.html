@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Оформление заказа</h1>
+    
+    <div>
+        <h3>Ваш заказ</h3>
+        <ul>
+            {% for item in cart %}
+                <li>
+                    {{ item.quantity }} x {{ item.dish.title }} ({{ item.total_price }} грн.)
+                </li>
+            {% endfor %}
+        </ul>
+        <p>До сплати: {{ cart.get_total_price }} грн.</p>
+    </div>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="Заказать"></p>
+    </form>
+{% endblock %}

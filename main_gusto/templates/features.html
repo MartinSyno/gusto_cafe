@@ -9,9 +9,17 @@
               {% for dish in special %}
               <div class="col-xs-12 col-sm-4">
                 <div class="features-item">
-                  <h3><a href="/menu/dish/{{ dish.pk }}">{{ dish.title }}</a></h3>
-                  <img src={{ dish.photo }} class="img-responsive" alt="">
-                  <p>{{ dish.desc }}</p>
+
+                  <h3><a href={{ dish.get_absolute_url }}>{{ dish.title }}</a></h3>
+
+                  <a href={{ dish.get_absolute_url }}>
+                      <img src={{ dish.photo }} class="img-responsive" alt="">
+{#                    <img src="{% if dish.photo %}{{ dish.photo }}{% else %}{% static "img/no_photo.jpg" %}{% endif %}" class="img-responsive" alt="">#}
+                  </a>
+
+                  <a href={% url "cart:cart_add" dish.id %}>Купить</a>
+
+                    <p>{{ dish.desc }}</p>
                 </div>
               </div>
               {% endfor %}

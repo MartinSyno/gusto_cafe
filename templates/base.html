@@ -96,6 +96,16 @@
         </div>
       </div>
     </header>
+    <div class="col-md-offset-5">
+    {% with total_items=cart|length %}
+        {% if cart|length > 0 %}
+            <h3>Твій кошик:
+                <a href={% url "cart:cart_detail" %}>{{ total_items }} блюда, {{ cart.get_total_price }} &#8372;</a></h3>
+        {% else %}
+            <h3>Твоя корзина пустая</h3>
+        {% endif %}
+    {% endwith %}
+    </div>
 
     {% block content %}
     {% endblock %}

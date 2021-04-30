@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import FormMessage
-
+from cart.cart import Cart#
 
 # Create your views here.
 def main_page_view(request):
@@ -27,6 +27,8 @@ def main_page_view(request):
 
     form = FormMessage()
 
+    cart = Cart(request)#
+
     return render(request, "index.html", context={
         "categories": categories,
         "special": special,
@@ -36,9 +38,11 @@ def main_page_view(request):
         "adress": adress,
         "opening_hours": opening_hours,
         "form": form,
+        "cart": cart,#
     })
 
 
-def dish_page_view(request, pk):
-    dish = Dish.objects.get(pk=pk)
-    return render(request, "dish_info.html", context={"dish": dish})
+def dish_page_view(request, id, slug):
+    dish = get_object_or_404(Dish, id=id, slug=slug)#, available=True)
+    cart = Cart(request)
+    return render(request, "dish_info.html", context={'dish': dish, 'cart': cart})#

@@ -29,4 +29,5 @@ class DishForm(forms.ModelForm):
 
     class Meta():
         model = Dish
-        fields = ("title", "photo", "dish_order", "is_visible", "price", "desc", "category")
+        fields = ("title", "slug", "photo", "dish_order", "is_visible", "price", "available", "desc", "category")
+        #exclude = ['slug'] #Чтобы slug вводился автоматически и в формах.

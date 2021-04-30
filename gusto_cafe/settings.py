@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "main_gusto",
     "admin_gusto",
     "account",
+    "orders",
+    "cart"
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD= "django.db.models.AutoField" #Если возникает ошибка по типу "main_gusto.Category:(models.W042) Auto-created primary key... by default "django.db.models.AutoField""
+CART_SESSION_ID = 'cart'

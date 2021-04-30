@@ -12,9 +12,13 @@
                       {% for dish in category.dishes %}
                       <div class="menu-item">
                         <div class="menu-item-name">
-                            <a href="/menu/dish/{{ dish.pk }}">
+
+                            <a href={{ dish.get_absolute_url }}>
                                 {{ dish.title }}
                             </a>
+
+                        <a href={% url "cart:cart_add" dish.id %}>Купить</a>
+
                         </div>
                         <div class="menu-item-price"> {{ dish.price }} грн. </div>
                         <div class="menu-item-description"> {{ dish.desc }} </div>
